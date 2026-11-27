@@ -21,3 +21,7 @@ Kerangka kejuruteraan sumber terbuka untuk menukar telefon pintar Android menjad
 | **2: Terma** | **Suhu Penyejuk (`ECT`)** | `82 °C – 93 °C` | `85 °C – 98 °C` |
 | **2: Terma** | **Suhu Transmisi** | `65 °C – 85 °C` *(Amaran 98 °C)* | `70 °C – 90 °C` *(Amaran 105 °C)* |
 | **2: Elektrikal** | **Voltan Sistem (`12V`)** | `12.4V – 14.4V` | `12.6V – 14.8V` |
+
+## 4. Kandungan Fail Tambahan Komuniti
+- **`RUJUKAN_PID_MALAYSIA.md`:** Jadual kod PID suhu bendalir transmisi (`CVT / D-CVT / AT / 7DCT`) bagi Perodua, Toyota, Honda, Proton, Mazda, Nissan, dan Mitsubishi.
+- **`skrip/stealthx_eco_advisor.py`:** Penasihat masa nyata di terminal yang mengesan zon *eco-cruise*, kebocoran vakum melalui `LTFT`, kesihatan alternator, dan amaran awal suhu enjin.
