@@ -17,15 +17,15 @@ DIREKTORI_LOG = "log_perjalanan"
 JENIS_BAHAN_API = "PETROL"  # Tukar kepada "DIESEL" jika perlu
 
 
-def hantar_perintah(sambungan, perintah: str) -> str:
-    sambungan.write((perintah + "\r").encode("ascii"))
+def hantar(obd, cmd: str) -> str:
+    obd.write((cmd + "\r").encode("ascii"))
     time.sleep(0.08)
-    data = sambungan.read(sambungan.in_waiting or 64).decode("ascii", errors="ignore")
-    baris = [b.strip() for b in data.splitlines() if b.strip() and ">" not in b]
+    raw = obd.read(obd.in_waiting or 64).decode("ascii", errors="ignore")
+    baris = [b.strip() for b in raw.splitlines() if b.strip() and ">" not in b]
     return baris[-1].replace(" ", "") if baris else ""
 
 
-def nyahkod(heks: str, awalan: str) -> list[int]:
+def bait(heks: str, awalan: str) -> list[int]:
     if not heks.startswith(awalan):
         return []
     isi = heks[len(awalan):]
@@ -42,37 +42,34 @@ def jalankan():
     fail_log = os.path.join(DIREKTORI_LOG, f"stealthx_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv")
 
     with serial.Serial(PORT_BERSIRI, KADAR_BAUD, timeout=1) as obd, open(fail_log, "w", newline="", encoding="utf-8") as f:
-        for cmd in ("ATZ", "ATE0", "ATL0", "ATS0", "ATSP6"):
-            hantar_perintah(obd, cmd)
-
-        penulis = csv.writer(f)
-        penulis.writerow(["Masa", "RPM", "Kelajuan_kmj", "Beban_%", "Pendikit_%", "IAT_C", "ECT_C", "MAF_gs", "Anggaran_kmL", "Voltan_V"])
-        print(f"Merekod telemetri ke {fail_log} (Tekan Ctrl+C untuk berhenti)")
-
+        for c in ("ATZ", "ATE0", "ATL0", "ATS0", "ATSP6"):
+            hantar(obd, c)
+        w = csv.writer(f)
+        w.writerow(["Masa", "RPM", "Kelajuan_kmj", "Beban_%", "Pendikit_%", "IAT_C", "ECT_C", "MAF_gs", "Anggaran_kmL", "Voltan_V"])
+        print(f"Merekod ke {fail_log} (Tekan Ctrl+C untuk berhenti)")
         try:
             while True:
-                rpm_b = nyahkod(hantar_perintah(obd, "010C"), "410C")
-                spd_b = nyahkod(hantar_perintah(obd, "010D"), "410D")
-                lod_b = nyahkod(hantar_perintah(obd, "0104"), "4104")
-                thr_b = nyahkod(hantar_perintah(obd, "0111"), "4111")
-                iat_b = nyahkod(hantar_perintah(obd, "010F"), "410F")
-                ect_b = nyahkod(hantar_perintah(obd, "0105"), "4105")
-                maf_b = nyahkod(hantar_perintah(obd, "0110"), "4110")
-                vlt_b = nyahkod(hantar_perintah(obd, "0142"), "4142")
+                r = bait(hantar(obd, "010C"), "410C")
+                s = bait(hantar(obd, "010D"), "410D")
+                l = bait(hantar(obd, "0104"), "4104")
+                t = bait(hantar(obd, "0111"), "4111")
+                i = bait(hantar(obd, "010F"), "410F")
+                e = bait(hantar(obd, "0105"), "4105")
+                m = bait(hantar(obd, "0110"), "4110")
+                v = bait(hantar(obd, "0142"), "4142")
 
-                rpm = round(((rpm_b[0] * 256) + rpm_b[1]) / 4, 1) if len(rpm_b) >= 2 else 0.0
-                kelajuan = spd_b[0] if spd_b else 0
-                beban = round((lod_b[0] * 100) / 255, 1) if lod_b else 0.0
-                pendikit = round((thr_b[0] * 100) / 255, 1) if thr_b else 0.0
-                iat = (iat_b[0] - 40) if iat_b else 0
-                ect = (ect_b[0] - 40) if ect_b else 0
-                maf = round(((maf_b[0] * 256) + maf_b[1]) / 100, 2) if len(maf_b) >= 2 else 0.0
-                voltan = round(((vlt_b[0] * 256) + vlt_b[1]) / 1000, 2) if len(vlt_b) >= 2 else 0.0
+                rpm = round(((r[0] * 256) + r[1]) / 4, 1) if len(r) >= 2 else 0.0
+                spd = s[0] if s else 0
+                lod = round((l[0] * 100) / 255, 1) if l else 0.0
+                tps = round((t[0] * 100) / 255, 1) if t else 0.0
+                iat = (i[0] - 40) if i else 0
+                ect = (e[0] - 40) if e else 0
+                maf = round(((m[0] * 256) + m[1]) / 100, 2) if len(m) >= 2 else 0.0
+                vlt = round(((v[0] * 256) + v[1]) / 1000, 2) if len(v) >= 2 else 0.0
+                lj = (maf * 3600) / (afr * ketumpatan) if maf > 0 else 0.0
+                kml = round(spd / lj, 2) if lj > 0 and spd > 0 else 0.0
 
-                liter_jam = (maf * 3600) / (afr * ketumpatan) if maf > 0 else 0.0
-                km_liter = round(kelajuan / liter_jam, 2) if liter_jam > 0 and kelajuan > 0 else 0.0
-
-                penulis.writerow([datetime.now().strftime("%H:%M:%S"), rpm, kelajuan, beban, pendikit, iat, ect, maf, km_liter, voltan])
+                w.writerow([datetime.now().strftime("%H:%M:%S"), rpm, spd, lod, tps, iat, ect, maf, kml, vlt])
                 f.flush()
                 time.sleep(0.5)
         except KeyboardInterrupt:
