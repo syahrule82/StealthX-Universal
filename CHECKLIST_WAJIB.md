@@ -15,3 +15,4 @@
 - [ ] Tetapkan amaran bunyi (*audible alarm*) bagi suhu penyejuk enjin dan suhu bendalir transmisi.
 - [ ] Pastikan pemegang telefon tidak menghalang beg udara (*airbag*) atau pandangan hadapan pemandu.
 - [ ] Tanggalkan penyesuai OBD-II sementara waktu sebelum menghantar kenderaan ke pusat servis rasmi.
+- [ ] Faham bahawa alat ini berfungsi sebagai **pemantau dan penasihat bacaan sahaja**, bukan pengganti pemeriksaan fizikal bengkel atau sistem keselamatan kilang.

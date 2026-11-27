@@ -25,3 +25,9 @@ Kerangka kejuruteraan sumber terbuka untuk menukar telefon pintar Android menjad
 ## 4. Kandungan Fail Tambahan Komuniti
 - **`RUJUKAN_PID_MALAYSIA.md`:** Jadual kod PID suhu bendalir transmisi (`CVT / D-CVT / AT / 7DCT`) bagi Perodua, Toyota, Honda, Proton, Mazda, Nissan, dan Mitsubishi.
 - **`skrip/stealthx_eco_advisor.py`:** Penasihat masa nyata di terminal yang mengesan zon *eco-cruise*, kebocoran vakum melalui `LTFT`, kesihatan alternator, dan amaran awal suhu enjin.
+
+## 5. Penafian & Batasan Tanggungjawab (Bahasa Mudah Faham)
+- **Bacaan Sahaja, Bukan Ubah Suai Komputer Kereta:** Kerangka dan skrip dalam repositori ini hanya **membaca data** daripada port OBD-II kenderaan untuk dipaparkan atau direkodkan. Ia **tidak mengubahsuai perisian asal ECU/TCM kilang** dan **tidak menjanjikan peningkatan kuasa atau penjimatan minyak secara automatik** tanpa cara pemanduan dan penyelenggaraan yang betul.
+- **Tanggungjawab Pemandu & Pemilik Kenderaan:** Setiap pemandu bertanggungjawab menjaga keselamatan di jalan raya (jangan leka melihat skrin telefon semasa memandu), memastikan kedudukan pemegang telefon tidak menghalang pandangan atau beg udara, serta menanggalkan penyesuai OBD-II sebelum menghantar kereta ke pusat servis rasmi.
+- **Tanggungjawab Bengkel / Pomen:** Bacaan suhu, voltan, atau pelarasan bahan api (`LTFT`) hanyalah **panduan awal**, bukan keputusan mutlak. Mekanik atau bengkel bertanggungjawab penuh terhadap pemeriksaan fizikal, pemilihan alat ganti, dan sebarang pendawaian atau *preference* tambahan yang dibuat ke atas kereta pelanggan.
+- **Kegunaan Sumber Terbuka:** Repositori ini dikongsi secara terbuka untuk tujuan pembelajaran, pemantauan kenderaan, dan rujukan komuniti atas risiko pengguna masing-masing.
