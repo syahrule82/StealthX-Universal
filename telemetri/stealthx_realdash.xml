@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OBD2>
+  <init>
+    <command send="ATZ" skipCount="0"/>
+    <command send="ATE0" skipCount="0"/>
+    <command send="ATL0" skipCount="0"/>
+    <command send="ATS0" skipCount="0"/>
+    <command send="ATSP6" skipCount="0"/>
+  </init>
+  <rotation>
+    <command send="010C" skipCount="0" targetId="37" conversion="((B0*256)+B1)/4"/>
+    <command send="010D" skipCount="0" targetId="81" conversion="B0"/>
+    <command send="0104" skipCount="1" targetId="39" conversion="B0*100/255"/>
+    <command send="0111" skipCount="1" targetId="42" conversion="B0*100/255"/>
+    <command send="0110" skipCount="1" targetId="31" conversion="((B0*256)+B1)/100"/>
+    <command send="0105" skipCount="4" targetId="14" conversion="B0-40"/>
+    <command send="010F" skipCount="4" targetId="27" conversion="B0-40"/>
+    <command send="0142" skipCount="5" targetId="12" conversion="((B0*256)+B1)/1000"/>
+    <command send="222201" header="7E1" skipCount="4" targetId="138" conversion="B0-40"/>
+  </rotation>
+</OBD2>

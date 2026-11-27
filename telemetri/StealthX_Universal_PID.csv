@@ -1,0 +1,14 @@
+Name,ShortName,ModeAndPID,Equation,Min Value,Max Value,Units,Header
+StealthX Engine RPM,RPM,010C,((A*256)+B)/4,0,8000,rpm,7E0
+StealthX Engine Load,Load,0104,A*100/255,0,100,%,7E0
+StealthX Throttle Position,TPS,0111,A*100/255,0,100,%,7E0
+StealthX Vehicle Speed,Speed,010D,A,0,255,km/h,7E0
+StealthX Coolant Temp,ECT,0105,A-40,-40,150,C,7E0
+StealthX Intake Air Temp,IAT,010F,A-40,-40,120,C,7E0
+StealthX MAF Air Flow,MAF,0110,((A*256)+B)/100,0,655.35,g/s,7E0
+StealthX Short Term Fuel Trim,STFT,0106,(A-128)*100/128,-100,100,%,7E0
+StealthX Long Term Fuel Trim,LTFT,0107,(A-128)*100/128,-100,100,%,7E0
+StealthX Control Module Voltage,Volt,0142,((A*256)+B)/1000,0,18,V,7E0
+StealthX Intake Manifold Pressure,MAP,010B,A,0,255,kPa,7E0
+StealthX Timing Advance,Timing,010E,(A/2)-64,-64,64,deg,7E0
+StealthX Transmission Temp (Templat),TransTemp,222201,A-40,-40,150,C,7E1
