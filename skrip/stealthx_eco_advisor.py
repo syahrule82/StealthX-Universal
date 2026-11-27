@@ -36,13 +36,12 @@ def nilai_status(rpm: float, beban: float, tps: float, ect: int, ltft: float, vo
     if abs(ltft) > 10.0:
         arah = "Terlalu Nipis (Lean/Vakum Bocor)" if ltft > 0 else "Terlalu Kaya (Rich/Penapis Udara Kotor)"
         amaran.append(f"[CAMPURAN API] LTFT {ltft:+.1f}% ({arah})")
-
     if amaran:
         return " | ".join(amaran)
     if 1450 <= rpm <= 2050 and 20.0 <= beban <= 45.0 and tps <= 25.0:
         return "[ZON HIJAU STEALTHX] Kecekapan Bahan Api Optimum & Enjin Dingin"
     if rpm > 2300 or tps > 32.0:
-        return "[NASIHAT PENDIKIT] Ringankan tekanan pedal untuk masuk semula ke zon 1,500-2,000 RPM"
+        return "[NASIHAT PENDIKIT] Ringankan pedal untuk kembali ke zon 1,500-2,000 RPM"
     return "[OPERASI NORMAL] Roh OEM Terpelihara"
 
 
